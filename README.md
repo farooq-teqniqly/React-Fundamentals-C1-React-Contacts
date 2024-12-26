@@ -41,10 +41,13 @@ To create a production-ready build of the project:
 ## Branch Information
 
 - **Starter Code**: To access the starter code, checkout the `starter` branch:
+
   ```bash
   git checkout starter
   ```
+
   Then start the application:
+
   ```bash
   npm run dev
   ```
