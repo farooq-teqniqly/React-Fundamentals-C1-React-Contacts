@@ -1,7 +1,9 @@
 import "./App.css";
+import { ListContacts } from "./components/ListContacts";
+import { contacts } from "./data/contacts";
 
 const App = () => {
-  return <div>Hello World</div>;
+  return <ListContacts contacts={contacts}></ListContacts>;
 };
 
 export default App;
