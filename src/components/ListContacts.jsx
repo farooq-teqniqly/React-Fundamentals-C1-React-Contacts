@@ -22,6 +22,30 @@ export const ListContacts = ({ contacts, onDelete }) => {
           c.name.toLowerCase().includes(query.toLowerCase())
         );
 
+  const showNumberOfContacts = () => {
+    if (contactsToShow.length === contacts.length) {
+      return null;
+    }
+
+    let message = null;
+
+    if (contactsToShow.length === 0) {
+      message = <span>Search yielded no results.</span>;
+    } else if (contactsToShow.length !== contacts.length) {
+      message = (
+        <span>
+          Showing {contactsToShow.length} of {contacts.length} contacts.
+        </span>
+      );
+    }
+    return (
+      <div className="showing-contacts">
+        {message}
+        <button onClick={clearQuery}>Show all contacts</button>
+      </div>
+    );
+  };
+
   return (
     <div className="list-contacts">
       <div className="list-contacts-top">
@@ -33,21 +57,7 @@ export const ListContacts = ({ contacts, onDelete }) => {
           onChange={(e) => updateQuery(e.target.value)}
         />
       </div>
-      {contactsToShow.length === 0 && (
-        <div className="showing-contacts">
-          <span>Search yielded no results.</span>
-          <button onClick={clearQuery}>Show all contacts</button>
-        </div>
-      )}
-      {contactsToShow.length > 0 &&
-        contactsToShow.length !== contacts.length && (
-          <div className="showing-contacts">
-            <span>
-              Showing {contactsToShow.length} of {contacts.length} contacts.
-            </span>
-            <button onClick={clearQuery}>Show all contacts</button>
-          </div>
-        )}
+      {showNumberOfContacts()}
       <ol>
         {contactsToShow.map((c) => (
           <li key={c.id} className="contact-list-item">
