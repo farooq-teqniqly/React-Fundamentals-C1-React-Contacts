@@ -2,15 +2,21 @@ import PropTypes from "prop-types";
 
 export const ListContacts = ({ contacts }) => {
   return (
-    <ul>
+    <ol>
       {contacts.map((c) => (
-        <li key={c.id}>
-          <p>{c.name}</p>
-          <p>{c.handle}</p>
-          <p>{c.avatarURL}</p>
+        <li key={c.id} className="contact-list-item">
+          <div
+            className="contact-avatar"
+            style={{ backgroundImage: `url(${c.avatarURL})` }}
+          ></div>
+          <div className="contact-details">
+            <p>{c.name}</p>
+            <p>@{c.handle}</p>
+          </div>
+          <button className="contact-remove">Remove</button>
         </li>
       ))}
-    </ul>
+    </ol>
   );
 };
 
