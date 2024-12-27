@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 
-export const ListContacts = ({ contacts }) => {
+export const ListContacts = ({ contacts, onDelete }) => {
   return (
     <ol>
       {contacts.map((c) => (
@@ -13,7 +13,9 @@ export const ListContacts = ({ contacts }) => {
             <p>{c.name}</p>
             <p>@{c.handle}</p>
           </div>
-          <button className="contact-remove">Remove</button>
+          <button className="contact-remove" onClick={() => onDelete(c.id)}>
+            Remove
+          </button>
         </li>
       ))}
     </ol>
@@ -29,4 +31,5 @@ ListContacts.propTypes = {
       avatarURL: PropTypes.string.isRequired,
     })
   ),
+  onDelete: PropTypes.func.isRequired,
 };
