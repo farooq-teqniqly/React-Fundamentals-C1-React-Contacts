@@ -1,7 +1,9 @@
 import PropTypes from "prop-types";
 import { useState } from "react";
+import { SearchBar } from "./SearchBar";
+import { ContactList } from "./ContactList";
 
-export const ListContacts = ({ contacts, onDelete }) => {
+export const ListContacts = ({ contacts = [], onDelete }) => {
   const [query, setQuery] = useState("");
 
   const updateQuery = (newQuery) => {
@@ -22,58 +24,16 @@ export const ListContacts = ({ contacts, onDelete }) => {
           c.name.toLowerCase().includes(query.toLowerCase())
         );
 
-  const showNumberOfContacts = () => {
-    let message = null;
-
-    if (contactsToShow.length === 0) {
-      message = <span>Search yielded no results.</span>;
-    } else if (contactsToShow.length !== contacts.length) {
-      message = (
-        <span>
-          Showing {contactsToShow.length} of {contacts.length} contacts.
-        </span>
-      );
-    } else {
-      return null;
-    }
-
-    return (
-      <div className="showing-contacts">
-        {message}
-        <button onClick={clearQuery}>Show all contacts</button>
-      </div>
-    );
-  };
-
   return (
     <div className="list-contacts">
-      <div className="list-contacts-top">
-        <input
-          type="text"
-          placeholder="Search contacts"
-          className="search-contacts"
-          value={query}
-          onChange={(e) => updateQuery(e.target.value)}
-        />
-      </div>
-      {showNumberOfContacts()}
-      <ol>
-        {contactsToShow.map((c) => (
-          <li key={c.id} className="contact-list-item">
-            <div
-              className="contact-avatar"
-              style={{ backgroundImage: `url(${c.avatarURL})` }}
-            ></div>
-            <div className="contact-details">
-              <p>{c.name}</p>
-              <p>@{c.handle}</p>
-            </div>
-            <button className="contact-remove" onClick={() => onDelete(c.id)}>
-              Remove
-            </button>
-          </li>
-        ))}
-      </ol>
+      <SearchBar
+        query={query}
+        onQueryChange={updateQuery}
+        onClearQuery={clearQuery}
+        filteredContactsCount={contactsToShow.length}
+        totalContactsCount={contacts.length}
+      ></SearchBar>
+      <ContactList contacts={contactsToShow} onDelete={onDelete}></ContactList>
     </div>
   );
 };
@@ -88,8 +48,4 @@ ListContacts.propTypes = {
     })
   ),
   onDelete: PropTypes.func.isRequired,
-};
-
-ListContacts.defaultProps = {
-  contacts: [],
 };
