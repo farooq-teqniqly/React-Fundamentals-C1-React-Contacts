@@ -4,9 +4,16 @@ import { useState } from "react";
 export const ListContacts = ({ contacts, onDelete }) => {
   const [query, setQuery] = useState("");
 
-  const updateQuery = (query) => {
-    setQuery(query.trim());
+  const updateQuery = (newQuery) => {
+    const newQueryTrimmed = newQuery.trim().toLowerCase();
+    const queryTrimmed = query.trim().toLowerCase();
+
+    if (newQueryTrimmed !== queryTrimmed) {
+      setQuery(newQueryTrimmed);
+    }
   };
+
+  const clearQuery = () => setQuery("");
 
   const contactsToShow =
     query.length === 0
@@ -26,6 +33,21 @@ export const ListContacts = ({ contacts, onDelete }) => {
           onChange={(e) => updateQuery(e.target.value)}
         />
       </div>
+      {contactsToShow.length === 0 && (
+        <div className="showing-contacts">
+          <span>Search yielded no results.</span>
+          <button onClick={clearQuery}>Show all contacts</button>
+        </div>
+      )}
+      {contactsToShow.length > 0 &&
+        contactsToShow.length !== contacts.length && (
+          <div className="showing-contacts">
+            <span>
+              Showing {contactsToShow.length} of {contacts.length} contacts.
+            </span>
+            <button onClick={clearQuery}>Show all contacts</button>
+          </div>
+        )}
       <ol>
         {contactsToShow.map((c) => (
           <li key={c.id} className="contact-list-item">
@@ -57,4 +79,8 @@ ListContacts.propTypes = {
     })
   ),
   onDelete: PropTypes.func.isRequired,
+};
+
+ListContacts.defaultProps = {
+  contacts: [],
 };
