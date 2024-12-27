@@ -23,10 +23,6 @@ export const ListContacts = ({ contacts, onDelete }) => {
         );
 
   const showNumberOfContacts = () => {
-    if (contactsToShow.length === contacts.length) {
-      return null;
-    }
-
     let message = null;
 
     if (contactsToShow.length === 0) {
@@ -37,7 +33,10 @@ export const ListContacts = ({ contacts, onDelete }) => {
           Showing {contactsToShow.length} of {contacts.length} contacts.
         </span>
       );
+    } else {
+      return null;
     }
+
     return (
       <div className="showing-contacts">
         {message}
