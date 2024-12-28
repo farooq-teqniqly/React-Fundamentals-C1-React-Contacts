@@ -7,16 +7,18 @@ export const ContactList = ({ contacts = [], onDelete }) => {
   }
 
   return (
-    <ol>
-      {contacts.map((c) => (
-        <div key={c.id}>
-          <Contact contact={c}></Contact>
-          <button className="contact-remove" onClick={() => onDelete(c.id)}>
-            Remove
-          </button>
-        </div>
-      ))}
-    </ol>
+    <div>
+      <ol>
+        {contacts.map((c) => (
+          <div key={c.id}>
+            <Contact contact={c}></Contact>
+            <button className="contact-remove" onClick={() => onDelete(c.id)}>
+              Remove
+            </button>
+          </div>
+        ))}
+      </ol>
+    </div>
   );
 };
 
@@ -26,7 +28,7 @@ ContactList.propTypes = {
       id: PropTypes.string.isRequired,
       name: PropTypes.string.isRequired,
       handle: PropTypes.string.isRequired,
-      avatarURL: PropTypes.string.isRequired,
+      avatarURL: PropTypes.string,
     })
   ),
   onDelete: PropTypes.func.isRequired,
